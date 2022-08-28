@@ -1,5 +1,5 @@
 # spy-starter-build
-  整合web开发常用功能，即开即用，用于快速构建项目
+  整合web开发常用功能，即开即用，用于快速构建项目: 基于jdk17， springboot2.7
 ### 相关子模块
 * spy-starter-tool  （常用工具）
 * spy-starter-web   （web工程搭建）
