@@ -1,0 +1,18 @@
+spy:
+  web:
+    enable: true
+    swagger-enable: true
+    feign-enable: true
+    skip-path:
+      - "/token/**"
+    jwt:
+      enable: true
+      secret: "1234567890123456"
+      expire-time-second: 7200
+    sequence:
+      enable: true
+      enable-db: false
+      enable-redis: true
+    lock:
+      enable-redis: true
+      enable-zookeeper: false

@@ -1,0 +1,8 @@
+spy:
+  websocket:
+    enable: true
+    buffer-size: 512000
+    idle-timeout: 7200000 #毫秒
+    end-points:
+      - "/spyweb"
+      - "/spysocket"

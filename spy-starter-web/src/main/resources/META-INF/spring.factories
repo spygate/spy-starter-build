@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  spy.project.config.GlobalWebAutoConfiguration

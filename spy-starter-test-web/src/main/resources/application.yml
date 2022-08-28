@@ -1,0 +1,18 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+  redis:
+    cluster:
+      nodes:
+        - 99.11.226.15:6379
+    jedis:
+      pool:
+        enabled: true
+    password: 1234567890
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
