@@ -5,6 +5,7 @@ spy:
     feign-enable: true
     skip-path:
       - "/token/**"
+      - "/excel/**"
     jwt:
       enable: true
       secret: "1234567890123456"
