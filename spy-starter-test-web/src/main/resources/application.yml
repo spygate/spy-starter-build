@@ -10,9 +10,9 @@ spring:
     password: root
     host: 127.0.0.1
     port: 6379
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
   datasource:
     url: jdbc:mysql://localhost:3308/demo_ds_0?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
     username: root

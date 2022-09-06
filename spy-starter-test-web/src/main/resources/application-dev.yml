@@ -1,7 +1,7 @@
 spy:
   web:
     enable: true
-    swagger-enable: true
+    swagger-enable: false
     feign-enable: true
     skip-path:
       - "/token/**"

@@ -1,7 +1,7 @@
 package test.project.web.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.Api;
+//import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Api("其他测试类")
+//@Api("其他测试类")
 @RestController
 @RequestMapping("/other")
 public class OtherController {
@@ -23,7 +23,7 @@ public class OtherController {
     /**
      * 并发执行工具使用示例
      */
-    @ApiOperation("并发调度测试")
+//    @ApiOperation("并发调度测试")
     @GetMapping("/thread")
     public void threadWork() throws InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(5);
@@ -67,13 +67,13 @@ public class OtherController {
     }
 
     @LogIgnore
-    @ApiOperation("获取用户登陆信息测试")
+//    @ApiOperation("获取用户登陆信息测试")
     @GetMapping("/loginuser")
     public JwtUser loginUser(JwtUser jwtUser) {
         return jwtUser;
     }
 
-    @ApiOperation("异常测试")
+//    @ApiOperation("异常测试")
     @GetMapping("/error")
     public void throwError() {
         throw new FrameException(ErrorCode.ERR0003);

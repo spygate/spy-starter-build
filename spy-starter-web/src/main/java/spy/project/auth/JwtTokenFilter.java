@@ -91,6 +91,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         skips.add("/webjars");
         skips.add("/swagger-resources");
         skips.add("/v2");
+        skips.add("/actuator");
         for (String str: skips) {
             if(uri.startsWith(str)) {
                 return true;

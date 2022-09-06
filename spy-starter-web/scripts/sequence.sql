@@ -5,8 +5,8 @@ create table spy_seq_cnt (
     cnt_seq_fmt varchar(10) not null default 'SS',
     cnt_ttl_len integer not null default 16,
     cnt_rtv_buf integer not null default 20,
-    cnt_seq_dat integer,
-    cnt_seq_cnt long,
+    cnt_seq_dat integer default 0,
+    cnt_seq_cnt long default 0,
     cnt_rcd_sts varchar(1) not null default 'Y',
     cnt_rcd_ver integer not null default 1,
     UNIQUE KEY uidx_key1 (cnt_seq_cod, cnt_sed_val)

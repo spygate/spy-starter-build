@@ -32,6 +32,10 @@ public class ReturnValueHandler implements HandlerMethodReturnValueHandler {
                                   NativeWebRequest webRequest) throws Exception {
         // 打印返回值
         StopWatch watch = LogThreadLocal.stopWatchThreadLocal.get();
+        if(watch == null) {
+            delegate.handleReturnValue(returnValue, returnType, mavContainer, webRequest);
+            return;
+        }
         watch.stop();
         long ms = watch.getTotalTimeMillis();
         if(!LogThreadLocal.ignore.get()) {
