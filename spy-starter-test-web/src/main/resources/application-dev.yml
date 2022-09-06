@@ -12,8 +12,8 @@ spy:
       expire-time-second: 7200
     sequence:
       enable: true
-      enable-db: false
       enable-redis: true
+      enable-db: true
     lock:
       enable-redis: true
       enable-zookeeper: false

@@ -1,10 +1,13 @@
 package spy.project.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -25,6 +28,9 @@ import spy.project.web.WebEnvGetterPrinter;
         GlobalWebProperties.SequenceProperties.class,
         GlobalWebProperties.LockProperties.class
 })
+@EnableJpaRepositories(basePackages = {"spy.project.db"})
+@EntityScan(basePackages = {"spy.project.db"})
+@EnableAspectJAutoProxy(exposeProxy = true)
 @Import({GlobalWebMvcConfiguration.class, FeignConfiguration.class, SwaggerConfiguration.class, SecurityConfiguration.class})
 public class GlobalWebAutoConfiguration {
 
@@ -63,25 +69,25 @@ public class GlobalWebAutoConfiguration {
     }
 
     @Bean(name = "fastId")
-    @ConditionalOnProperty(value = "spy.web.sequence.enableRedis", havingValue = "true", matchIfMissing = false)
+    @ConditionalOnProperty(value = "spy.web.sequence.enable-redis", havingValue = "true", matchIfMissing = false)
     public Sequence FastIdGenerator() {
         return new FastIdGenerator();
     }
 
     @Bean(name = "dbId")
-    @ConditionalOnProperty(value = "spy.web.sequence.enableDb", havingValue = "true", matchIfMissing = false)
+    @ConditionalOnProperty(value = "spy.web.sequence.enable-db", havingValue = "true", matchIfMissing = false)
     public Sequence DbIdGenerator() {
         return new DbIdGenerator();
     }
 
     @Bean(name = "redisLock")
-    @ConditionalOnProperty(value = "spy.web.lock.enableRedis", havingValue = "true", matchIfMissing = false)
+    @ConditionalOnProperty(value = "spy.web.lock.enable-redis", havingValue = "true", matchIfMissing = false)
     public Lock RedisLock() {
         return new RedisLock();
     }
 
     @Bean(name = "redisCache")
-    @ConditionalOnProperty(value = "spy.web.lock.enableRedis", havingValue = "true", matchIfMissing = false)
+    @ConditionalOnProperty(value = "spy.web.lock.enable-redis", havingValue = "true", matchIfMissing = false)
     public Cache RedisCache() {
         return new RedisCache();
     }

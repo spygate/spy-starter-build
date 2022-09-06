@@ -27,7 +27,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Slf4j
 @Configuration
 @ConditionalOnClass({Feign.class})
-@ConditionalOnProperty(value = "spy.web.feignEnable", havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(value = "spy.web.feign-enable", havingValue = "true", matchIfMissing = false)
 public class FeignConfiguration {
 
     @Autowired

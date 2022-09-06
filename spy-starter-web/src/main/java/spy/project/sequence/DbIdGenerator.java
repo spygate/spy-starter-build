@@ -1,15 +1,15 @@
 package spy.project.sequence;
 
-
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import spy.project.db.dao.SeqRepository;
+import spy.project.db.entity.SpySeqCnt;
 import spy.project.exceptions.FrameException;
 import spy.project.exceptions.codes.ErrorCode;
 import spy.project.utils.DateUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -23,6 +23,9 @@ public class DbIdGenerator implements Sequence {
 
     private Lock sLock = new ReentrantLock();
 
+    @Autowired
+    private SeqRepository seqRepository;
+
     @Override
     public String getNext(String wSeqCod, String wSedVal) {
         String key = wSeqCod + wSedVal;
@@ -33,7 +36,7 @@ public class DbIdGenerator implements Sequence {
                     DbSequence seq = new DbSequence();
                     int wCurDay = DateUtils.getCurrent().formatIntValue("yyyyMMdd");
                     sequenceMap.put(key, seq);
-                    ((DbIdGenerator)AopContext.currentProxy()).loadSeq(wSeqCod, wSeqCod, wCurDay);
+                    ((DbIdGenerator)AopContext.currentProxy()).loadSeq(wSeqCod, wSedVal, wCurDay);
                     Lock lock = new ReentrantLock();
                     lockMap.put(key,lock);
                 }
@@ -57,39 +60,35 @@ public class DbIdGenerator implements Sequence {
     public void loadSeq(String seqCode, String seedVal, int wCurDay) {
         DbSequence seq = sequenceMap.get(seqCode + seedVal);
 
-        // 取数据库定义
-        SeqDef seqDef = new SeqDef();
+        // 取数据库定义for update
+        SpySeqCnt seqDef = seqRepository.findByCntSeqCodAndCntSedVal(seqCode, seedVal);
 
         if(seqDef == null) {
             log.error("流水号定义不存在：{} - {}", seqCode, seedVal);
             throw new FrameException(ErrorCode.ERR0001);
         }
 
-        int wSerialLength = seq.calSerialLength(seqDef.getSeqFmt(), seedVal, seqDef.getTtlLen());
+        int wSerialLength = seq.calSerialLength(seqDef.getCntSeqFmt(), seedVal, seqDef.getCntTtlLen());
 
         long wCurSerial = 1;
-        if(!seq.getSwitchFlag(seqDef.getSeqFmt(), wCurDay, seqDef.getSeqDat())) {
-            wCurSerial = seqDef.getSeqCnt();
+        if(!seq.getSwitchFlag(seqDef.getCntSeqFmt(), wCurDay, seqDef.getCntSeqDat())) {
+            wCurSerial = seqDef.getCntSeqCnt();
         }
 
-        seq.totalLength = seqDef.getTtlLen();
-        seq.seed = seqDef.getSedVal();
-        seq.format = seqDef.getSeqFmt();
-        seq.cacheNumber = seqDef.getRtvBuf();
+        seq.totalLength = seqDef.getCntTtlLen();
+        seq.seed = seqDef.getCntSedVal();
+        seq.format = seqDef.getCntSeqFmt();
+        seq.cacheNumber = seqDef.getCntRtvBuf();
         seq.curDate = wCurDay;
         seq.curSerialNumber = wCurSerial;
-        seq.nextSerialNumber = wCurSerial + seqDef.getRtvBuf();
+        seq.nextSerialNumber = wCurSerial + seqDef.getCntRtvBuf();
         seq.serialLength = wSerialLength;
 
         //修改定义
-        SeqDef update = new SeqDef();
-        update.setSeqCnt(seq.nextSerialNumber);
-        update.setSeqDat(wCurDay);
-        update.setSeqCod(seqCode);
-        update.setSedVal(seedVal);
-        //乐观所修改
-
-
+        seqDef.setCntSeqCnt(seq.nextSerialNumber);
+        seqDef.setCntSeqDat(wCurDay);
+        //修改
+        seqRepository.save(seqDef);
     }
 
     public String getSeqNumber(String seqCode, String seedVal) {
@@ -119,18 +118,6 @@ public class DbIdGenerator implements Sequence {
         }
     }
 
-
-    @Data
-    public class SeqDef {
-        private String seqCod;
-        private String sedVal;
-        private String seqFmt;
-        private Integer ttlLen;
-        private Integer rtvBuf;
-        private Integer seqDat;
-        private Long seqCnt;
-        private String extC60;
-    }
 
     public class DbSequence {
 
@@ -202,7 +189,6 @@ public class DbIdGenerator implements Sequence {
             }
             return datePart;
         }
-
 
     }
 

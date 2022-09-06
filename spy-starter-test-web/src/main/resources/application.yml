@@ -4,15 +4,24 @@ spring:
   profiles:
     active: dev
   redis:
-    cluster:
-      nodes:
-        - 99.11.226.15:6379
     jedis:
       pool:
         enabled: true
-    password: 1234567890
+    password: root
+    host: 127.0.0.1
+    port: 6379
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:mysql://localhost:3308/demo_ds_0?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
+    username: root
+    password: root
+  jpa:
+    database: MySQL
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
 
 

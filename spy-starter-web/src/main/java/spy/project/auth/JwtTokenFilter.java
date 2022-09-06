@@ -85,6 +85,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
             return v;
         }).filter(Objects::nonNull).collect(Collectors.toList());
+        skips.add("/favicon.ico");
         for (String str: skips) {
             if(uri.startsWith(str)) {
                 return true;
