@@ -85,7 +85,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
             return v;
         }).filter(Objects::nonNull).collect(Collectors.toList());
+        //默认放行路径
         skips.add("/favicon.ico");
+        skips.add("/swagger-ui.html");
+        skips.add("/webjars");
+        skips.add("/swagger-resources");
+        skips.add("/v2");
         for (String str: skips) {
             if(uri.startsWith(str)) {
                 return true;
