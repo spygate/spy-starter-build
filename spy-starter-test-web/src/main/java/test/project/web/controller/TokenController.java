@@ -5,6 +5,8 @@ package test.project.web.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 import spy.project.auth.JwtService;
 import spy.project.auth.JwtUser;
@@ -15,6 +17,7 @@ import spy.project.web.IgnoreResponseWrapper;
 @RestController
 @RequestMapping("/token")
 @Slf4j
+@RefreshScope
 public class TokenController {
 
     @Autowired
@@ -23,6 +26,9 @@ public class TokenController {
     @Autowired
     @Qualifier("NanoId")
     private Sequence sequence;
+
+    @Value("${spy.test}")
+    private String props;
 
 //    @ApiOperation("获取token")
     @GetMapping("/get/{userId}/{mobile}")
@@ -41,6 +47,11 @@ public class TokenController {
         JwtUser jwtUser = new JwtUser();
         jwtUser.setUserId(sequence.getNext());
         return "Bearer" + jwtService.generateJwtToken(jwtUser);
+    }
+
+    @GetMapping("/props")
+    public String gProps() {
+        return this.props;
     }
 
 

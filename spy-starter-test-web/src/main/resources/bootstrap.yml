@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.1.3:8848
+        file-extension: yaml
+        namespace: a85bf35d-59a2-4d19-b1b2-0467f3617c4e #空间隔离，可以区分环境
+        group: spy-group  #组隔离，同一空间下，可以群分一个环境下的服务调用，同一个组内的服务可以相互调用
+        cluster-name: spy #集群隔离，最低等级，同一组下，可以区分应用做调试，服务调用到集群
+      discovery:
+        server-addr: 192.168.1.3:8848
+        namespace: a85bf35d-59a2-4d19-b1b2-0467f3617c4e
+        group: spy-group
+        cluster-name: spy
+  application:
+    name: test-web

@@ -1,8 +1,6 @@
 server:
   port: 8080
 spring:
-  profiles:
-    active: dev
   redis:
     jedis:
       pool:
@@ -23,5 +21,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+
 
 
