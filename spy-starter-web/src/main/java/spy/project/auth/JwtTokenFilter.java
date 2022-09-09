@@ -92,6 +92,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         skips.add("/swagger-resources");
         skips.add("/v2");
         skips.add("/actuator");
+        skips.add("/run");//xxl-job
         for (String str: skips) {
             if(uri.startsWith(str)) {
                 return true;

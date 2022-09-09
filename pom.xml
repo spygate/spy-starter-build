@@ -26,6 +26,7 @@
 		<module>spy-starter-test-websocket</module>
 		<module>spy-starter-stream-dependencies</module>
 		<module>spy-starter-nacos</module>
+		<module>spy-starter-schedule</module>
 	</modules>
 
 	<dependencyManagement>

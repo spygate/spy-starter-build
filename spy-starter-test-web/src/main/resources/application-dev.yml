@@ -1,4 +1,13 @@
 spy:
+  schedule:
+    enable: true
+    adminAddress: http://192.168.1.6:9090/xxl-job-admin
+    accessToken: default_token
+    executorAppname: test-web
+    executorLogpath: ./logs
+    executorLogretentionDays: 30
+    executor-port: 8091 #必填 >0,不能与应用同端口netty启动的
+    executor-address: http://192.168.1.6:8091/  #地址必须/结尾，比较坑
   web:
     enable: true
     swagger-enable: false
