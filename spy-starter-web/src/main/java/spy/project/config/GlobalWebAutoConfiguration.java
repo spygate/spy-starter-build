@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import spy.project.auth.JwtService;
 import spy.project.cache.Cache;
 import spy.project.cache.RedisCache;
@@ -20,7 +19,6 @@ import spy.project.sequence.*;
 import spy.project.web.ResponseBodyWrapFactoryBean;
 import spy.project.web.WebEnvGetterPrinter;
 
-@EnableSwagger2
 @Configuration
 @EnableConfigurationProperties({
         GlobalWebProperties.class,
@@ -31,7 +29,7 @@ import spy.project.web.WebEnvGetterPrinter;
 @EnableJpaRepositories(basePackages = {"spy.project.db"})
 @EntityScan(basePackages = {"spy.project.db"})
 @EnableAspectJAutoProxy(exposeProxy = true)
-@Import({GlobalWebMvcConfiguration.class, FeignConfiguration.class, SwaggerConfiguration.class, SecurityConfiguration.class})
+@Import({GlobalWebMvcConfiguration.class, FeignConfiguration.class, SecurityConfiguration.class})
 public class GlobalWebAutoConfiguration {
 
     @Bean
