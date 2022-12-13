@@ -36,9 +36,10 @@
     function connectMethod(){
         var url = document.getElementById('url').value;
         var token = document.getElementById('token').value;
+        url = url + '?token=' + token;
         if('WebSocket' in window) {
             console.log("WebSocket");
-            websocket = new WebSocket(url,[token]);
+            websocket = new WebSocket(url);
         } else if('MozWebSocket' in window) {
             console.log("MozWebSocket");
             websocket = new MozWebSocket(url);

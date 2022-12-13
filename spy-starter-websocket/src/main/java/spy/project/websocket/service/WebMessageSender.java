@@ -19,7 +19,10 @@ public class WebMessageSender {
     @Autowired
     private WebSessionHolder webSessionHolder;
 
-    public <T extends WebSocketMessage> void sendMessageById(String id, T message) {
+    /**
+     * 这里的同步避免高并发死锁问题
+     */
+    public synchronized <T extends WebSocketMessage> void sendMessageById(String id, T message) {
         Set<WebSocketSession> sessionSet = webSessionHolder.getOrNull(id);
         if(sessionSet != null) {
             sessionSet.stream().filter(Objects::nonNull).forEach(s -> {
@@ -33,7 +36,7 @@ public class WebMessageSender {
         }
     }
 
-    public <T extends WebSocketMessage> void broadcastMessage(T message) {
+    public synchronized <T extends WebSocketMessage> void broadcastMessage(T message) {
         List<WebSocketSession> sessionList = webSessionHolder.getAll();
         sessionList.stream()
                     .forEach(session -> {
