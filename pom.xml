@@ -27,7 +27,8 @@
 		<module>spy-starter-stream-dependencies</module>
 		<module>spy-starter-nacos</module>
 		<module>spy-starter-schedule</module>
-	</modules>
+        <module>spy-starter-sharding-data</module>
+    </modules>
 
 	<dependencyManagement>
 		<dependencies>

@@ -14,8 +14,6 @@ public class GlobalWebProperties {
 
     private Boolean enable = false;
 
-    private Boolean swaggerEnable = false;
-
     private Boolean feignEnable = false;
 
     private List<String> skipPath = new ArrayList<String>();
